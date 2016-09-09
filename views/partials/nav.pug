@@ -1,0 +1,14 @@
+nav.navbar.navbar-default
+	.container-fluid
+		ul.nav.nav-pills
+			li(class=`${page || 'active'}`)
+				a(href='/') Home
+			li(class=`${page === 'about' ? 'active' : ''}`)
+				a(href='/about') About
+			li(class=`${page === 'contact' ? 'active' : ''}`)
+				a(href='/contact') Contact
+
+			//-
+			//- li(class={ active: !page })
+			//- li(class={ active: page === 'About'})
+			//- li(class={ active: page === 'Contact'})

@@ -1,0 +1,16 @@
+body {
+	background-color: salmon;
+}
+
+.centerPhoto img {
+	max-width: 100%;
+}
+
+.formDiv {
+	margin: 0 auto;
+	border: solid 2px black;
+}
+
+.active {
+	color: white;
+}

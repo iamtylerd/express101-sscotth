@@ -1,0 +1,20 @@
+{
+  "name": "express101-sscotth",
+  "description": "",
+  "main": "server.js",
+  "authors": [
+    "iamtylerd <tylerdanielphotography@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/iamtylerd/express101-sscotth",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
