@@ -5,7 +5,11 @@ const bodyParser = require('body-parser')
 const chalk = require('chalk')
 
 
+const routes = require('./routes/')
+const { connect } = require('./database')
+
 const app = express();
+
 //set a globabl port variable
 const port = process.env.PORT || 3000
 app.set('port', port)
@@ -34,36 +38,12 @@ app.use((req, res, next) => {
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }));
 
-
-// Route
-	app.get('/', (req,res) =>
-		res.render('page')
-	)
-
-	app.get('/about', (req,res) => {
-		res.render('about',  { page: 'about' })
-	})
-
-	app.get('/contact', (req,res) => {
-		res.render('contact',  { page: 'contact' })
-	})
-
-	app.get('/404', (req,res) => {
-		res.render('404')
-	})
-
-	app.post('/contact', (req, res) => {
-		console.log(req.body)
-		res.redirect('/')
-	})
+// routes
+app.use(routes)
 
 
 //404 catch and pass to error handler
 app.use((req, res) => {
-	// console.error('404')
-	// const err = Error('Not Found')
-	// err.status = 404
-	// next(err)
 	res.render('404')
 })
 
@@ -73,6 +53,11 @@ app.use((err, req, res, next) => {
 	console.log(`${new Date()} ${chalk.red(req.method)} Error (${res.statusCode}):${res.statusMessage} ${req.headers['user-agent']}`)
 })
 
-app.listen(port, () =>
-	console.log(`Express server listening on port ${port}`)
-)
+connect()
+	.then(() => {
+		// Only opens the port after connecting to Mongo
+		app.listen(port, () =>
+			console.log(`Express server listening on port ${port}`)
+		)
+	})
+	.catch(console.error)
