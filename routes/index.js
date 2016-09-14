@@ -5,6 +5,8 @@ const router = Router()
 
 const Contact = require('../models/contact')
 const Order = require('../models/order')
+const Size = require('../models/size')
+const Topping = require('../models/topping')
 
 // Route
 	router.get('/', (req,res) =>
@@ -19,9 +21,15 @@ const Order = require('../models/order')
 		res.render('contact',  { page: 'contact' })
 	})
 
-	router.get('/order', (req,res) => {
-		res.render('order', { page: 'Order' })
-	})
+	router.get('/order', (req,res, err) =>
+		Promise
+			.all([
+				Size.find().sort({ inches: 1 }),
+				Topping.find().sort({name: 1})
+			])
+			.then(([sizes, toppings]) => res.render('order', {page: 'Order', sizes, toppings}))
+			.catch(err)
+	)
 
 	router.get('/404', (req,res) => {
 		res.render('404')

@@ -16,10 +16,13 @@ block content
 				.form-group
 					label(for='size') Size
 					select.form-control#size(name='size')
-						option
-						option(value='10') Small 10"
-						option(value='12') Medium 12"
-						option(value='14') Large 14"
-						option(value='1776') Murica 1776"
+						option Select a Size:
+						each size in sizes
+							option(value=size.inches) #{size.name}: #{size.inches}
+				.form-group
+					label(for='toppings') Toppings
+					select.form-control#toppings(name='toppings' multiple)
+						each topping in toppings
+							option(value=topping.name)= topping.name
 				.form-group.btn
 					button(type="submit") Submit

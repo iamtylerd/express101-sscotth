@@ -51,6 +51,7 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
 	res.sendStatus(err.status || 500)
 	console.log(`${new Date()} ${chalk.red(req.method)} Error (${res.statusCode}):${res.statusMessage} ${req.headers['user-agent']}`)
+	console.error(err.stack)
 })
 
 connect()
