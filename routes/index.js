@@ -3,7 +3,8 @@
 const { Router } = require('express')
 const router = Router()
 
-const { db } = require('../database')
+const Contact = require('../models/contact')
+const Order = require('../models/order')
 
 // Route
 	router.get('/', (req,res) =>
@@ -18,13 +19,25 @@ const { db } = require('../database')
 		res.render('contact',  { page: 'contact' })
 	})
 
+	router.get('/order', (req,res) => {
+		res.render('order', { page: 'Order' })
+	})
+
 	router.get('/404', (req,res) => {
 		res.render('404')
 	})
 
-	router.post('/contact', (req, res) => {
-		db().collection('contact')
-			.insertOne(req.body)
+
+	router.post('/contact', (req, res, next) => {
+		Contact
+			.create(req.body)
+			.then(() => res.redirect('/'))
+			.catch(next)
+	})
+
+	router.post('/order', (req, res) => {
+		Order
+			.create(req.body)
 			.then(() => res.redirect('/'))
 			.catch(() => res.send('BAD'))
 	})
