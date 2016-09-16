@@ -6,7 +6,7 @@ const chalk = require('chalk')
 
 
 const routes = require('./routes/')
-const { connect } = require('./db/database')
+const { connect } = require('../db/database')
 
 const app = express();
 
