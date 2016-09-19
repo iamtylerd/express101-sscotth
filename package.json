@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/iamtylerd/express101-sscotth#readme",
   "dependencies": {
+    "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
     "chalk": "^1.1.3",
     "express": "^4.14.0",
