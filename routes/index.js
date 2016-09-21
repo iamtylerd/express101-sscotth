@@ -16,10 +16,7 @@ const logout = require('./logoutRoute')
 const order = require('./orderRoute')
 const register = require('./registerRoute')
 
-// Route
-router.get('/', (req,res) =>
-	res.render('page')
-)
+
 //Public Routes
 router.use(contact)
 router.use(about)
