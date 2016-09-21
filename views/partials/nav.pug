@@ -9,8 +9,13 @@ nav.navbar.navbar-default
 				a(href='/contact') Contact
 			li(class=`${page === 'Order' ? 'active' : ''}`)
 				a(href='/order') Order
-			li(class=`${page === 'login' ? 'active' : ''}`)
-				a(href='/login') Login
+			if email
+				li: a(href='/logout') Logged in as #{email}
+			else
+				li(class=`${page === 'login' ? 'active' : ''}`)
+					a(href='/login') Login
+				li(class=`${page === 'register' ? 'active' : ''}`)
+					a(href='/register') Register
 
 			//-
 			//- li(class={ active: !page })

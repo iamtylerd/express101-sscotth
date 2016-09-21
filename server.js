@@ -3,6 +3,8 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 const chalk = require('chalk')
+const session = require('express-session')
+const RedisStore = require('connect-redis')(session)
 
 
 const routes = require('./routes/')
@@ -15,6 +17,7 @@ const port = process.env.PORT || 3000
 app.set('port', port)
 
 
+
 // app.engine('handlebars', hbs());
 // app.set('views', 'views');
 
@@ -25,16 +28,33 @@ if(process.env.NODE_ENV !== 'production') {
 	app.locals.pretty = true
 }
 app.locals.company = "Pizza Tyler"
-
+app.locals.user = {email: 'a@b.com'}
+app.locals.errors = {} // errors & body added to avoid guard statements
+app.locals.body = {}
 
 
 //Middlewares about routes
+//Add url: heroku env var to RedisStore
+app.use(session({
+  store: new RedisStore({
+  	url: process.env.REDIS_URL || 'redis://localhost:6379'
+  }),
+  secret: 'pizzadescottsupersecretkey'
+}))
+
+app.use((req, res, next) => {
+  app.locals.email = req.session.email
+  next()
+})
+
 app.use((req, res, next) => {
 	console.log(`${new Date()} ${chalk.cyan(req.method)} ${req.headers['user-agent']}`)
-
 	//Call back to end the request
 	next()
 })
+
+
+
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }));
 
